@@ -6,12 +6,16 @@ class  dataCleaning:
     Functions in the module transform the raw data to 
     
     """
+
+    import pandas as pd
     #create a constructor with the data
     def __init__(self,data):
 
       self.data=data 
 
     #drop null columns
+
+
 
     def dropNullCols(df)->pd.DataFrame:
         
