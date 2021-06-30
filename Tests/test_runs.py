@@ -5,6 +5,7 @@ import sys, os
 from dataClean import nulCols
 from loadData import DataReading
 
+
 columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
 
