@@ -11,10 +11,10 @@ class ReadData:
 
     def readData(self):
 
-        print('Reading the data')
+        print('Reading the data....')
         try :
             data=pd.read_excel(self.path)
-            print("successfully read the dataset")
+            print("successfully read the dataset...")
             return data
         except FileNotFoundError:
             
@@ -26,8 +26,8 @@ class ReadData:
         print ("Displaying the first 5 rows of the dataset")
 
         try:
-            dataHead=self.readData().head()
-            return dataHead
+            
+            return self.readData().head()
         except :
             print ("An error occured while we tried to load your data")
 
@@ -36,13 +36,13 @@ class ReadData:
     def display(self):
         # 
         data=self.showTop()
-        data=self.readData()
+        
 
         return data
 
 if (__name__ == '__main__'):
 
-    dataFrame=ReadData(r'C:\Users\blais\Desktop\10-Academy\Week1\10-Academy\Week1\data\Week1_challenge_data_source.xlsx')
+    dataFrame=ReadData('../data/Week1_challenge_data_source.xlsx')
     # dataFrame=ReadData('data.csv')
     dataFrame=dataFrame.display()
     print (dataFrame)
