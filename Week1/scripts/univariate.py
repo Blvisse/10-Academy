@@ -83,10 +83,11 @@ class Univariate:
 
         print ("Caclulating Max ")
         maxVal=np.max(nmArray)
+        minVal=np.min(nmArray)
 
         print("Done....\n ")
         
-        dispdf=[{'Q1':Q1,'Q2':Q2,'Q3':Q3,'Std deviation':std,'IQR':IQR,'Max Value':maxVal}]
+        dispdf=[{'Q1':Q1,'Q2':Q2,'Q3':Q3,'Std deviation':std,'IQR':IQR,'Max Value':maxVal,'Min Value':minVal}]
         print("Creating DataFrame")
         df=pd.DataFrame(data=dispdf)
         df=df.T
@@ -99,12 +100,14 @@ class Univariate:
         # datar=self.data
         
         # colzz=self.col
+        plt.figure(figsize=(10,8))
         sns.histplot(x=self.data[col], color=colour ,kde=True )
         plt.title("Histogram of {}".format(col), fontsize=20)
         plt.ylabel('Frequency')
         plt.xlabel(col)
         plt.show()
-        # plt.figure(figsize=(10,8))
+        
+        plt.figure(figsize=(10,8))
         plt.title("Boxplot of {}".format(col))
         sns.boxplot(self.data[col])
 
