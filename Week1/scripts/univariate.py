@@ -115,7 +115,9 @@ class Univariate:
         
         
         
+        plt.title("A countplot of the top {} most frequent {}".format(num,col))
         sns.countplot(self.data[col],order=self.data[col].value_counts().iloc[:num].index)
+        plt.xticks(rotation=90)
 
     def pieChart(self,col,color):
         cmap=plt.get_cmap(color)
