@@ -30,10 +30,11 @@ class EDA:
         return missValues
 
     def aboveThresholdMissing(self,threshold):
-        df=self.data.dropna(thresh=self.data.shape[0]*threshold,how='all',axis=1)
+        self.data.dropna(thresh=len(self.data) * threshold,inplace=True,axis=1)
+
        
 
-        return df
+        
     
     def dropDuplicates(self):
         print("Dropping Duplicates...\n")
@@ -47,7 +48,7 @@ class EDA:
 
     def imputeColumnsMean(self,cols):
         #fill empty columns with the mean of the columns
-        print ("Imputing missing rows with mean values of the feature")
+        print ("Imputing missing rows of {} column with mean values of the feature".format(cols))
         data=self.data[cols].fillna(self.data[cols].mean(),inplace=True)
 
         print ("Done......!!!")
@@ -56,7 +57,7 @@ class EDA:
     def imputeColumnsMode(self,cols):
         #fill empty columns with the mean of the columns
         print ("Imputing missing rows with mode values of the feature")
-        data=self.data[cols].fillna(self.data[cols].mode(),inplace=True)
+        data=self.data[cols].fillna(self.data[cols].value_counts().index[0],inplace=True)
 
         print ("Done......!!!")
 
@@ -69,10 +70,22 @@ class EDA:
         print ("Done......!!!")
 
         return data    
-
+    def forwardFill(self,cols):
+        self.data[cols].fillna(method='ffill',inplace=True)
+    def backwardFill(self,cols):
+        self.data[cols].fillna(method='bfill',inplace=True)
     def outlierdetect(self):
         #this function detects and eliminates outliers using the z-score method
         #any value that has a z-score of 3 or higher will be tretated as an outlier and hence dropped
+        pass
+    def convertToDT(self,cols):
+        print("Converting {} column to date time format".format(cols))
+        self.data[cols]=pd.to_datetime(self.data[cols])
+        print("Done..Here's the new datset")
+
+        return self.data
+    def dateColsFE(self,cols):
+
         pass
       
 
