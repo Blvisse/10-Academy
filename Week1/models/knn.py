@@ -24,9 +24,9 @@ class Models:
         pass 
     def visualizePlot(self,cluster,color,**kwargs):
         kmean=KMeans(n_clusters=cluster)
-        preds=kmean.fit_predict(self.scaleData())
+        preds=kmean.fit_predict(self.data)
         plt.figure(figsize=(15,8))
-        plt.scatter(self.scaleData[:,0],self.scaleData[:,1],c=preds)
+        plt.scatter(self.data[:,0],self.data[:,1],c=preds)
 
         plt.scatter(kmean.cluster_centers_[:,0],kmean.cluster_centers_[:,1],c=color)
         plt.show()
