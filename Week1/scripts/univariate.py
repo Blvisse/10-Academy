@@ -18,25 +18,25 @@ def readCSV(path):
 class Univariate:
     
     
-    def __init__(self,data,col):
+    def __init__(self,data):
         self.data=data
-        self.col=col
+        
     
     def readData(self):
     
         data=pd.read_csv(self.data)
         return data
-    def calculateMetrics(self):
+    def calculateMetrics(self,col):
         #convert the column to a numpy array to perform the metric evaluation
         print("Reading data")
         
         
         
         print("Done")
-        print('Calculating the univariate metrics of the columns {}'.format(self.col))
+        print('Calculating the univariate metrics of the columns {}'.format(col))
         
         print("Converting the data into numpy arrays")
-        nmArray=self.data[self.col].values
+        nmArray=self.data[col].values
         print("Done!")
         print("Calculating mean....")        
         mean=np.mean(nmArray)
@@ -64,33 +64,69 @@ class Univariate:
         df.columns=['Analysis Values']
 
         return df
-    def calculateQuatile(self):
+    def calculateDispersion(self,col):
         # nmArray=self.data[self.col].to_numpy()
+        print("Calculating dispersion stats for {}".format(col))
+        nmArray=self.data[col].values
+        
+        Q1=np.quantile(nmArray,.25)
+        Q2=np.quantile(nmArray,.50)
+        Q3=np.quantile(nmArray,.75)
 
-        pass
-    def vizualiseHist(self,colour):
+        print("Calculating Standard Deviation")
+
+        std=np.std(nmArray)
+
+        print ("Calculating Inter Quartile Range")
+
+        IQR=Q3-Q1
+
+        print ("Caclulating Max ")
+        maxVal=np.max(nmArray)
+        minVal=np.min(nmArray)
+
+        print("Done....\n ")
+        
+        dispdf=[{'Q1':Q1,'Q2':Q2,'Q3':Q3,'Std deviation':std,'IQR':IQR,'Max Value':maxVal,'Min Value':minVal}]
+        print("Creating DataFrame")
+        df=pd.DataFrame(data=dispdf)
+        df=df.T
+        df.columns=['Dispersion Values']
+
+
+
+        return df 
+    def vizualiseHist(self,col,colour):
         # datar=self.data
         
         # colzz=self.col
-        sns.histplot(x=self.data[self.col],bins=40 , color=colour ,kde=True )
-        plt.title("Histogram of {}".format(self.col), fontsize=20)
+        plt.figure(figsize=(10,8))
+        sns.histplot(x=self.data[col], color=colour ,kde=True )
+        plt.title("Histogram of {}".format(col), fontsize=20)
         plt.ylabel('Frequency')
-        plt.xlabel(self.col)
+        plt.xlabel(col)
         plt.show()
-        # plt.figure(figsize=(10,8))
-        plt.title("Boxplot of {}".format(self.col))
-        sns.boxplot(self.data[self.col])
+        
+        plt.figure(figsize=(10,8))
+        plt.title("Boxplot of {}".format(col))
+        sns.boxplot(self.data[col])
 
     
         
         
-    def visualiseCount(self,num):
+    def visualiseCount(self,col,num):
         
         
         
-        sns.countplot(self.data[self.col],order=self.data[self.col].value_counts.iloc[:num].index)
+        plt.title("A countplot of the top {} most frequent {}".format(num,col))
+        sns.countplot(self.data[col],order=self.data[col].value_counts().iloc[:num].index)
+        plt.xticks(rotation=90)
 
-
+    def pieChart(self,col,color):
+        cmap=plt.get_cmap(color)
+        colors=[cmap(i) for i in np.linspace(0, 1, 8)]
+        plt.pie(self.data[col].value_counts(),labels=self.data[col].unique(),shadow=True,colors=colors,autopct='%1.1f%%')
+        plt.show()
 
 
 
