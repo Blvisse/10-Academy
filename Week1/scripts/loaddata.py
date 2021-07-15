@@ -3,6 +3,7 @@ This is a script to read and load data into the system
 
 """
 import pandas as pd
+import sys 
 class ReadData:
     
 
@@ -21,7 +22,26 @@ class ReadData:
             print("Woops! The file was not found")
 
             return
+    def readCsv(self):
+        print("Reading Data...\n")
+        try: 
+            data=pd.read_csv(self.path)
 
+            print ("Successfully read the dataset ...")
+            return data 
+        except FileNotFoundError:
+            
+            print("Woops! The file was not found")
+
+            return
+        
+        except Exception as e:
+
+            print ("Woops {} error occurred".format(e.__class__))
+
+            return 
+
+            
     def showTop(self):
         print ("Displaying the first 5 rows of the dataset")
 
