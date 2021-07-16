@@ -69,11 +69,20 @@ class EDA:
 
         print ("Done......!!!")
 
-        return data    
+        return data   
+     
     def forwardFill(self,cols):
-        self.data[cols].fillna(method='ffill',inplace=True)
+        print ("Imputing using forward fill...")
+        data=self.data[cols].fillna(method='ffill',inplace=True)
+        print("Done")
+        return data
+
     def backwardFill(self,cols):
-        self.data[cols].fillna(method='bfill',inplace=True)
+        print ("Imputing using backward fill...")
+        data=self.data[cols].fillna(method='bfill',inplace=True)
+        print("Done")
+        return data
+
     def outlierdetect(self):
         #this function detects and eliminates outliers using the z-score method
         #any value that has a z-score of 3 or higher will be tretated as an outlier and hence dropped
