@@ -17,7 +17,14 @@ class Models:
     def knnCluster(self,cluster):
         
         kmean=KMeans(n_clusters=cluster)
-        return kmean.fit(self.scaleData())
+        return kmean.fit_predict(self.scaleData())
+    def knnPreds(self,cluster):
+        kmean=KMeans(n_clusters=cluster)
+
+        kmeanClusters=kmean.fit_predict(self.data)
+    
+
+        return kmeanClusters
 
     def modelMetrics(self):
 
