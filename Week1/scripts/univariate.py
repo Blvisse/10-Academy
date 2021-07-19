@@ -6,9 +6,15 @@ import numpy as np
 from scipy import stats
 import seaborn as sns
 import matplotlib.pyplot as plt
+import logging
 
-sns.set_style()
+# sns.set_style()
+# logging.basicConfig(filename="..tests/newfile.log",
+#                     format='%(asctime)s %(message)s',
+#                     filemode='w')
 
+# logger=logging.getLogger()
+# logger.setLevel(logging.DEBUG)
 def readCSV(path):
     data=pd.read_csv(path)
 

@@ -69,15 +69,40 @@ class EDA:
 
         print ("Done......!!!")
 
-        return data    
+        return data   
+     
     def forwardFill(self,cols):
-        self.data[cols].fillna(method='ffill',inplace=True)
+        print ("Imputing using forward fill...")
+        data=self.data[cols].fillna(method='ffill',inplace=True)
+        print("Done")
+        return data
+
     def backwardFill(self,cols):
-        self.data[cols].fillna(method='bfill',inplace=True)
+        print ("Imputing using backward fill...")
+        data=self.data[cols].fillna(method='bfill',inplace=True)
+        print("Done")
+        return data
+
     def outlierdetect(self):
-        #this function detects and eliminates outliers using the z-score method
-        #any value that has a z-score of 3 or higher will be tretated as an outlier and hence dropped
-        pass
+        print("Getting numerical features..\n")
+
+        numCols=self.data.select_dtypes(exclude=['object'])
+        numCols.drop(labels=['IMSI','MSISDN/Number','IMEI'],inplace=True,axis=1)
+        #'Decile Class','Month','Day','Year','Hour'
+        print ("Detecting outliers..\n")
+        for cols in numCols:
+            print("Calculating limits \n")
+            upperLimit=self.data[cols].mean()+3*self.data[cols].std()
+            lowerLimit=self.data[cols].mean()-3*self.data[cols].std()
+
+            self.data=self.data[(self.data[cols]<upperLimit)&(self.data[cols]>lowerLimit)]
+
+        print ("Sorted outliers...\n")
+        return self.data 
+
+
+
+        
     def convertToDT(self,cols):
         print("Converting {} column to date time format".format(cols))
         self.data[cols]=pd.to_datetime(self.data[cols])
